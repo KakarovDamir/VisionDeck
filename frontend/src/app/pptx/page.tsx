@@ -24,7 +24,7 @@ const Pptx: React.FC = () => {
     setSuccess('');
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/pptx', { userPrompt: topic });
+      const response = await axios.post('https://day-y-1.onrender.com/api/pptx', { userPrompt: topic });
       if (response.status === 201) {
         console.log('Presentation created:', response.data);
         setPresentationId(response.data._id);

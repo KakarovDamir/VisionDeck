@@ -79,7 +79,7 @@ const RevealSlideShow: React.FC<{ presentationId: string }> = ({ presentationId 
   useEffect(() => {
     const fetchPresentation = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/pptx/${presentationId}`);
+        const response = await axios.get(`https://day-y-1.onrender.com/api/pptx/${presentationId}`);
         console.log('Presentation fetched:', response.data);
         setSlides(response.data.slides);
         if (response.data.slides.length > 0) {

@@ -96,7 +96,7 @@ const RevealSlideShow: React.FC<{ presentationId: string }> = ({ presentationId 
   useEffect(() => {
     if (slides.length > 0) {
       Reveal.initialize({
-        transition: 'concave', // Apply the rotating transition effect
+        transition: 'concave', 
       });
     }
   }, [slides]);

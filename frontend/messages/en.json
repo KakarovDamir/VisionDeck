@@ -1,0 +1,37 @@
+{
+ "Index":
+    {
+        "create_presentation": "Create Your Presentations in 30 Seconds",
+        "turn_ideas": "Turn your ideas into visually appealing presentations effortlessly with our AI tool. Experience a new level of creativity and professionalism.",
+        "enter_topic": "Enter presentation topic",
+        "generate_presentation": "Generate ✨",
+        "view_presentation": "View",
+        "error_creating_presentation": "Error creating presentation",
+        "ai_presentation_assistant": "AI Presentation Assistant",
+        "p1": "Our AI presentation generator creates visually stunning slides with just a few clicks.",
+        "stunning_designs": " Export to PDF and PPTX",
+        "p2":"Our AI tool lets you easily export your presentations to PDF and PPTX formats. Create professional slides and share them in your preferred format in just a few clicks.",
+        "seamless_workflow": "Seamless Workflow",
+        "p3":"Streamline your presentation creation process with our intuitive and user-friendly interface. And share links to your presentations via Telegram and WhatsApp in just a few clicks.",
+        "examples": "Examples of Presentations Created by Our AI",
+        "p4":"Check out examples of stunning presentations created by our AI.",
+        "aboutUs":"About Us",
+        "p5": "We are dedicated to providing the best presentation tools powered by AI to help you create stunning slides effortlessly.",
+        "follow": "Follow us"
+    },
+    "PresentationPage":{
+        "share": "Share",
+        "upgrade": "Update",
+        "downloadStarted": "Download started",
+        "downloadComplete": "Download complete!",
+        "downloadError": "Download error",
+        "wp": "Send via WhatsApp",
+        "tg": "Send via Telegram",
+        "link": "Copy link to presentation",
+        "pdf": "Download PDF",
+        "pptx": "Download PPTX",
+        "info": "Do you want to save the link to this presentation? If you leave without saving, you might lose access to it.", 
+        "save": "Save Link", 
+        "leave": "Leave"
+    }
+} 

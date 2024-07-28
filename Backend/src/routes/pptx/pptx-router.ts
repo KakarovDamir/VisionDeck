@@ -1,10 +1,14 @@
 import { Router } from "express";
-import pptxController from "./pptx-controller";
+import PptxController from "./pptx-controller";
 
 const pptxRouter = Router();
 
-pptxRouter.post("/", pptxController.createPresentation);
-pptxRouter.get("/:id", pptxController.getPresentation);
-pptxRouter.put("/:id/slide/:slideIndex", pptxController.updateSlide);
+pptxRouter.post("/", PptxController.createPresentation.bind(PptxController));
+pptxRouter.get("/:id", PptxController.getPresentation.bind(PptxController));
+pptxRouter.put("/:id/slide/:slideIndex", PptxController.updateSlide.bind(PptxController));
+pptxRouter.put("/:id", PptxController.updatePresentation.bind(PptxController));
+pptxRouter.get("/:id/generate", PptxController.generatePptx.bind(PptxController));
+pptxRouter.get('/:id/pdf', PptxController.generatePdf.bind(PptxController));
+
 
 export default pptxRouter;

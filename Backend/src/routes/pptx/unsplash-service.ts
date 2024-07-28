@@ -21,7 +21,7 @@ class UnsplashService {
       const response = await axios.get(`https://api.unsplash.com/search/photos?client_id=e2wj390EsFZa9M7Ktv8NznND8thaEAXB8J4m6j4tHEY&query=${query}&per_page=10`);
       const results = response.data.results;
       if (results.length === 0) {
-        throw new Error("No images found");
+        return ""
       }
       return results[index % results.length].urls.full;
     } catch (error) {

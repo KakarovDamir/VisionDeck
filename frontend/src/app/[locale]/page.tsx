@@ -137,14 +137,14 @@ export default function Home({ params: { locale } }: Props) {
         <section className="container mx-auto px-4 py-12 sm:px-6 lg:px-6 lg:py-24">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-2">
-              <img src="https://img.icons8.com/?size=50&id=WDI63NQbh3cO&format=png&color=000000" alt="AI" />
+              <Image src="https://img.icons8.com/?size=50&id=WDI63NQbh3cO&format=png&color=000000" alt="AI" width={50} height={50} />
               <h3 className="text-xl sm:text-2xl font-bold font-serif text-blue-900">{t('ai_presentation_assistant')}</h3>
               <p className="font-light text-black text-lg">
                 {t('p1')}
               </p>
             </div>
             <div className="space-y-2">
-              <img src="https://img.icons8.com/?size=50&id=48161&format=png&color=000000" alt="palette" />
+              <Image src="https://img.icons8.com/?size=50&id=QVobCUiSKNwK&format=png&color=000000" alt="palette" width={50} height={50} />
               <h3 className="text-xl sm:text-2xl font-bold font-serif text-blue-900">{t('stunning_designs')}</h3>
               <p className="font-light text-black text-lg">
                 {t('p2')}

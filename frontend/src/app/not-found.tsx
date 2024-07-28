@@ -47,7 +47,7 @@ export default function NotFound() {
             <body>
                 <div className="container">
                     <h1>Something went wrong!</h1>
-                    <p>We couldn't find the page you were looking for.</p>
+                    <p>We couldn&apos;t find the page you were looking for.</p>
                     <a href="/">Go back to the homepage</a>
                 </div>
             </body>

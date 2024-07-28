@@ -72,7 +72,7 @@ class PptxController {
   public async generatePdf(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      const browser = await puppeteer.launch();
+      const browser = await this.launchBrowserWithRetries();
       const page = await browser.newPage();
       await page.goto(`https://day-y.vercel.app/ru/pptx/${id}?print-pdf`, {
         waitUntil: 'networkidle0',
@@ -94,6 +94,34 @@ class PptxController {
       console.error('Error generating PDF:', error);
       res.status(500).json({ message: 'Error generating PDF', error });
     }
+  }
+
+
+  private async launchBrowserWithRetries(retries = 3): Promise<import('puppeteer').Browser> {
+    for (let i = 0; i < retries; i++) {
+      try {
+
+        const browser = await import('puppeteer').then(puppeteer => puppeteer.launch({
+          headless: true,
+          args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process', // <- this one doesn't work in Windows
+            '--disable-gpu',
+          ],
+
+        }));
+        return browser;
+      } catch (error) {
+        console.error(`Attempt ${i + 1} to launch browser failed:`, error);
+        if (i === retries - 1) throw error;
+      }
+    }
+    throw new Error('Failed to launch browser after multiple attempts');
   }
 }
 

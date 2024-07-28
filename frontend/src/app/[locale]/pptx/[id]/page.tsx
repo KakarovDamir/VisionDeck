@@ -67,7 +67,7 @@ const PresentationPage: React.FC = () => {
             onClick={() => {
               toast.dismiss();
               document.body.style.overflow = 'auto';
-              router.back();
+              router.push('/'); // Always navigate to home
             }}
             className="bg-gray-500 text-white py-1 px-3 rounded mt-2"
           >
@@ -248,16 +248,10 @@ const PresentationPage: React.FC = () => {
     }
   };
 
-  if (!presentationData) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
-        <div className="loader">
-          <div className="flex flex-row gap-2">
-            <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-            <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
-            <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-          </div>
-        </div>
+        <div className="loader"></div>
       </div>
     );
   }
@@ -304,6 +298,9 @@ const PresentationPage: React.FC = () => {
                 </ul>
               )}
             </div>
+            <p className="text-sm text-gray-500">
+              {t('animation_note')}
+            </p>
             <button
               onClick={handleUpdateAnimation}
               className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
@@ -389,7 +386,7 @@ const PresentationPage: React.FC = () => {
           </div>
         </div>
       )}
-      <RevealSlideShow presentationId={presentationId} />
+      <RevealSlideShow key={presentationId} presentationId={presentationId} />
       <style jsx>{`
         .animate-slide-down {
           animation: slide-down 0.3s ease-out;
@@ -413,11 +410,31 @@ const PresentationPage: React.FC = () => {
           width: 120px;
           height: 120px;
           animation: spin 2s linear infinite;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: auto;
         }
 
         @keyframes spin {
           0% { transform: rotate(0deg); }
-           100% { transform: rotate(360deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .flex {
+          display: flex;
+        }
+
+        .justify-center {
+          justify-content: center;
+        }
+
+        .items-center {
+          align-items: center;
+        }
+
+        .h-full {
+          height: 100vh;
         }
       `}</style>
     </div>

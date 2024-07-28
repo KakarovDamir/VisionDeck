@@ -25,6 +25,7 @@ const RevealSlideShow: React.FC<{ presentationId: string }> = ({ presentationId 
   const [slides, setSlides] = useState<Slide[]>([]);
   const [theme, setTheme] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [revealInstance, setRevealInstance] = useState<any>(null);
 
   useEffect(() => {
     const fetchPresentation = async () => {
@@ -46,14 +47,19 @@ const RevealSlideShow: React.FC<{ presentationId: string }> = ({ presentationId 
   useEffect(() => {
     if (theme) {
       import(`reveal.js/dist/theme/${theme}.css`).then(() => {
-        Reveal.initialize({
+        const reveal = new Reveal({
           transition: 'concave',
           pdfSeparateFragments: false,
           pdfMaxPagesPerSlide: 1,
           pdfPageHeightOffset: 2,
         });
 
-        document.querySelector('.reveal')?.classList.add(`theme-${theme}`);
+        reveal.initialize();
+        setRevealInstance(reveal);
+
+        return () => {
+          reveal.destroy();
+        };
       });
     }
   }, [theme]);
@@ -91,12 +97,8 @@ const RevealSlideShow: React.FC<{ presentationId: string }> = ({ presentationId 
       <div className="reveal" data-theme={theme}>
         <div className="slides">
           {slides.length === 0 ? (
-            <div className={`loader-container ${theme}`}>
-              <div className="flex flex-row gap-2">
-                <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-                <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
-                <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-              </div>
+            <div className="flex justify-center items-center h-full">
+              <div className="loader"></div>
             </div>
           ) : (
             slides.map((slide, index) => (
@@ -154,25 +156,33 @@ const RevealSlideShow: React.FC<{ presentationId: string }> = ({ presentationId 
             justify-content: flex-start;
             align-items: center;
           }
-          .loader-container {
+          .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid blue;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
+            margin: auto;
           }
-          .white .loader-container {
-            background-color: white;
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
-          .black .loader-container {
-            background-color: black;
+          .flex {
+            display: flex;
           }
-          .sky .loader-container {
-            background-color: skyblue;
+          .justify-center {
+            justify-content: center;
+          }
+          .items-center {
+            align-items: center;
+          }
+          .h-full {
+            height: 100vh;
           }
         `}</style>
         {error && <p>{error}</p>}

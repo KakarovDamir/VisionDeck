@@ -32,6 +32,7 @@
         "pptx": "Download PPTX",
         "info": "Do you want to save the link to this presentation? If you leave without saving, you might lose access to it.", 
         "save": "Save Link", 
-        "leave": "Leave"
+        "leave": "Leave",
+        "animation_note": "Works best on wide screens. Rotate your phone for better view."
     }
 } 

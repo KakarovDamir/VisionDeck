@@ -34,15 +34,13 @@ const Navbar: React.FC = () => {
               onChange={onSelectChange}
               disabled={isPending}
             >
-              <option value="en" className="block sm:hidden">🇬🇧 EN</option>
-              <option value="ru" className="block sm:hidden">🇷🇺 RU</option>
-              <option value="kz" className="block sm:hidden">🇰🇿 KZ</option>
-              <option value="en" className="hidden sm:block">🇬🇧 English</option>
-              <option value="ru" className="hidden sm:block">🇷🇺 Русский</option>
-              <option value="kz" className="hidden sm:block">🇰🇿 Қазақ тілі</option>
+              <option value="en">🇬🇧 EN</option>
+              <option value="ru">🇷🇺 RU</option>
+              <option value="kz">🇰🇿 KZ</option>
             </select>
           </label>
         </div>
+
       </div>
     </nav>
   );

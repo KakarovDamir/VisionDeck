@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "VisionDeck",
-  description: "Everything ingenious is simple",
+  description: "Create Stunning Presentations in Just 30 Seconds - Simple, Fast, Ingenious!",
 };
 
 export default async function RootLayout({

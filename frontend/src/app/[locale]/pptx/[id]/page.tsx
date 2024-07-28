@@ -34,7 +34,7 @@ const PresentationPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/pptx/${presentationId}`);
+        const response = await axios.get(`https://day-y-1.onrender.com/api/pptx/${presentationId}`);
         setPresentationData(response.data);
         setLoading(false);
       } catch (error) {
@@ -109,7 +109,7 @@ const PresentationPage: React.FC = () => {
 
   const handleUpdateTheme = () => {
     setIsUpdatingTheme(true);
-    axios.put(`http://localhost:5000/api/pptx/${presentationId}`, {
+    axios.put(`https://day-y-1.onrender.com/api/pptx/${presentationId}`, {
       theme: selectedTheme,
     })
       .then(response => {
@@ -126,7 +126,7 @@ const PresentationPage: React.FC = () => {
 
   const handleUpdateAnimation = () => {
     setIsUpdatingAnimation(true);
-    axios.put(`http://localhost:5000/api/pptx/${presentationId}`, {
+    axios.put(`https://day-y-1.onrender.com/api/pptx/${presentationId}`, {
       transition: selectedAnimation,
     })
       .then(response => {
@@ -170,7 +170,7 @@ const PresentationPage: React.FC = () => {
         progress: undefined,
       });
 
-      const response = await axios.get(`http://localhost:5000/api/pptx/${presentationId}/generate`, {
+      const response = await axios.get(`https://day-y-1.onrender.com/api/pptx/${presentationId}/generate`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }));
@@ -215,7 +215,7 @@ const PresentationPage: React.FC = () => {
         progress: undefined,
       });
 
-      const response = await axios.get(`http://localhost:5000/api/pptx/${presentationId}/pdf`, {
+      const response = await axios.get(`https://day-y-1.onrender.com/api/pptx/${presentationId}/pdf`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));

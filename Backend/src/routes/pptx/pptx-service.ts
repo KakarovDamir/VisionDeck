@@ -118,7 +118,7 @@ class PptxService {
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
       });
   
       let presentationData = completion.choices[0].message.content;

@@ -25,8 +25,7 @@ class UnsplashService {
       }
       return results[index % results.length].urls.full;
     } catch (error) {
-      console.error("Error fetching image by query:", error);
-      throw error;
+      return ""
     }
   }
 }

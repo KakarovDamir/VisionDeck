@@ -67,18 +67,19 @@ class PptxService {
 
   private async generateJson(userPrompt: string): Promise<any> {
     const systemPrompt = `
-  You are an exceptionally advanced AI specialized in generating high-quality presentation content. The user will provide a prompt, and your task is to create a comprehensive and well-structured JSON object that outlines the content of each slide in the presentation. This JSON object should be formatted for storage in a MongoDB database. Each section in the JSON represents a slide. Adhere to the following structure and guidelines to ensure the highest quality and relevance:
-
+  You are an exceptionally advanced AI specialized in generating high-quality presentation content. The user will provide a prompt, and your task is to create a comprehensive and well-structured JSON object that outlines the content of each slide in the presentation. This JSON object should be formatted for storage in a MongoDB database. Each section in the JSON represents a slide. Adhere to the following structure and guidelines to ensure the highest quality and relevance.
+  
+  Output only the JSON object, enclosed between the delimiters ###BEGIN_JSON### and ###END_JSON###.
+  
   1. **Presentation Structure:**
      - The presentation must consist of a minimum of 8 slides.
      - At least 3 slides should contain images; the remaining slides should primarily focus on textual content.
      - Each slide must contain either text or images, not both.
      - Ensure that slides with images are placed after meaningful text slides and are not at the beginning or the end of the presentation.
-
+  
   2. **Slide Representation:**
      - Each slide should be represented as an object within the "slides" array.
      - The structure of each slide object should be as follows:
-     \`\`\`json
      {
          "title": "Title of the section or slide",
          "background": {
@@ -93,32 +94,24 @@ class PptxService {
              }
          ]
      }
-     \`\`\`
-
+  
   3. **Content Guidelines:**
-     - **Title:**
-       - Ensure the title of each slide is concise yet descriptive.
-     - **Elements:**
-       - Each element in the slide should be clear, well-structured, and contribute to the overall message of the slide.
-       - The content should be relevant and informative without unnecessary information. Each text slide should provide enough information to be engaging and insightful, usually between 3-5 sentences.
-       - Avoid redundant or repetitive information, maintaining engagement and insightfulness throughout the presentation.
-       - Include relevant data points, statistics, or quotes where applicable to add value and credibility to the presentation.
-     - **Text Content:**
-       - Each text element should include a "color" property. If the color is not specified, use the default value "#000000".
-     - **Image Content:**
-       - Use a keyword in English that describes the content of the image instead of a random link. This keyword will be used to search for relevant images using the Unsplash API.
-       - Ensure the image matches the context from the previous slide to maintain consistency and relevance.
-
+     - **Title:** Ensure the title of each slide is concise yet descriptive.
+     - **Elements:** Each element in the slide should be clear, well-structured, and contribute to the overall message of the slide.
+     - **Text Content:** Each text element should include a "color" property. If the color is not specified, use the default value "#000000".
+     - **Image Content:** Use a keyword in English that describes the content of the image instead of a random link. This keyword will be used to search for relevant images using the Unsplash API.
+  
   4. **Quality and Consistency:**
      - Generate the content in the same language as the user prompt to maintain coherence and relevance.
      - Utilize a consistent and professional tone across all slides.
-     - Incorporate variety in text formatting (e.g., headings, bullet points) to enhance readability and visual appeal.
-     - Strive for a balanced layout for text and images, ensuring each slide is aesthetically pleasing and easy to follow.
-
-  5. **Overall Objective:**
-     - The goal is to create a professional and visually appealing presentation based on the user prompt. Adhere to these guidelines to ensure the presentation is of high quality and relevance, effectively conveying the intended message and engaging the audience.
-`;
-
+  
+  5. **Overall Objective:** Create a professional and visually appealing presentation based on the user prompt.
+  
+  ###BEGIN_JSON###
+  <Output your JSON object here>
+  ###END_JSON###
+  `;
+  
     try {
       const completion = await openai.chat.completions.create({
         messages: [
@@ -127,30 +120,28 @@ class PptxService {
         ],
         model: "gpt-4o-mini",
       });
-
+  
       let presentationData = completion.choices[0].message.content;
-
+  
       if (!presentationData) {
         throw new Error("Presentation data is null");
       }
-
+  
       console.log("Raw presentation data:", presentationData);
-
-      const jsonMatch = presentationData.match(/\{[\s\S]*\}/);
-
+  
+      const jsonMatch = presentationData.match(/###BEGIN_JSON###([\s\S]*?)###END_JSON###/);
+  
       if (!jsonMatch) {
         throw new Error("Failed to extract JSON from the generated content");
       }
-
-      presentationData = jsonMatch[0];
-
-      presentationData = presentationData.replace(/```json\n|```/g, '');
-
+  
+      presentationData = jsonMatch[1];
+  
       try {
         const parsedData = JSON.parse(presentationData);
-
+  
         parsedData.presentationTitle = parsedData.presentationTitle || userPrompt;
-
+  
         await Promise.all(parsedData.slides.map(async (slide: any) => {
           await Promise.all(slide.elements.map(async (element: any) => {
             if (element.type === 'image' && element.path) {
@@ -165,7 +156,7 @@ class PptxService {
             }
           }));
         }));
-
+  
         return parsedData;
       } catch (parseError) {
         console.error("Failed to parse JSON. Raw data:", presentationData);
@@ -176,6 +167,7 @@ class PptxService {
       throw error;
     }
   }
+  
 
   private async savePresentation(userPrompt: string, slides: any): Promise<any> {
     const newPresentation = new pptx({

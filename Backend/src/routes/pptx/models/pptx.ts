@@ -29,7 +29,6 @@ const ElementSchema = new Schema({
   type: { type: String, required: true },
   text: { type: String },
   path: { type: String },
-  shapeType: { type: String }
 }, { _id: false });
 
 // Схема для слайда
